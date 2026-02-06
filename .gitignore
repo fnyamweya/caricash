@@ -1,5 +1,8 @@
 node_modules/
 dist/
+packages/**/src/*.js
+packages/**/src/*.d.ts
+packages/**/src/*.map
 .env
 .env.local
 *.log
