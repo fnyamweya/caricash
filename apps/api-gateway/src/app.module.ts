@@ -2,11 +2,12 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { HealthModule } from './modules/health/health.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { LedgerModule } from './modules/ledger/ledger.module';
+import { AuditModule } from './modules/audit/audit.module';
 import { CorrelationMiddleware } from './middleware/correlation.middleware';
 import { IdempotencyMiddleware } from './middleware/idempotency.middleware';
 
 @Module({
-  imports: [HealthModule, IdentityModule, LedgerModule],
+  imports: [HealthModule, IdentityModule, LedgerModule, AuditModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
