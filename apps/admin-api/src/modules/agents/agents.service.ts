@@ -19,7 +19,7 @@ export class AgentsService {
       displayName: params.displayName,
     });
     if (!principal) {
-      throw new ValidationError('Failed to create agent principal');
+      throw new ConflictError('Failed to create agent principal');
     }
 
     const agentNumber = this.generateAgentNumber(params.countryCode);
@@ -31,7 +31,7 @@ export class AgentsService {
       parentAgentId: params.parentAgentId ?? null,
     });
     if (!agent) {
-      throw new ValidationError('Failed to create agent');
+      throw new ConflictError('Failed to create agent');
     }
 
     await query(
@@ -63,7 +63,7 @@ export class AgentsService {
       level: params.level,
     });
     if (!agent) {
-      throw new ValidationError('Agent not found');
+      throw new ConflictError('Failed to update agent');
     }
 
     await query(
