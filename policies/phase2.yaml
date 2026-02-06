@@ -1,0 +1,47 @@
+name: phase2-policies
+version: "2.0"
+rules:
+  # Merchant access
+  - effect: ALLOW
+    subjects: ["role:MERCHANT_OWNER", "role:MERCHANT_MANAGER"]
+    actions: ["merchant.user.manage", "merchant.role.manage", "merchant.till.bind"]
+    resources: ["merchant:*"]
+    reason: MERCHANT_MANAGE
+    obligations: ["require_mfa"]
+
+  - effect: ALLOW
+    subjects: ["role:MERCHANT_CASHIER", "role:MERCHANT_VIEWER"]
+    actions: ["merchant.user.read"]
+    resources: ["merchant:*"]
+    reason: MERCHANT_READ
+
+  # Agent access
+  - effect: ALLOW
+    subjects: ["role:AGENT_OWNER", "role:AGENT_SUPERVISOR"]
+    actions: ["agent.user.manage", "agent.role.manage"]
+    resources: ["agent:*"]
+    reason: AGENT_MANAGE
+    obligations: ["require_maker_checker"]
+
+  - effect: ALLOW
+    subjects: ["role:AGENT_TELLER", "role:AGENT_VIEWER"]
+    actions: ["agent.user.read"]
+    resources: ["agent:*"]
+    reason: AGENT_READ
+
+  # Staff KYC
+  - effect: ALLOW
+    subjects: ["role:STAFF_COMPLIANCE", "role:STAFF_OPS"]
+    actions: ["kyc.review"]
+    resources: ["kyc:*"]
+    reason: KYC_REVIEW
+    obligations: ["require_maker_checker"]
+
+  # Customer KYC submit
+  - effect: ALLOW
+    subjects: ["CUSTOMER"]
+    actions: ["kyc.submit"]
+    resources: ["kyc:*"]
+    reason: KYC_SUBMIT
+
+  # Deny cross-principal by default (engine enforces boundary)

@@ -1,4 +1,5 @@
 import pino from 'pino';
+import { PII_REDACTION_PATHS } from './pii';
 
 export type Logger = pino.Logger;
 
@@ -15,6 +16,10 @@ export function createLogger(options?: {
     name: options?.name ?? 'caricash',
     level: options?.level ?? process.env.LOG_LEVEL ?? 'info',
     timestamp: pino.stdTimeFunctions.isoTime,
+    redact: {
+      paths: PII_REDACTION_PATHS,
+      censor: '[REDACTED]',
+    },
     formatters: {
       level(label) {
         return { level: label };

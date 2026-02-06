@@ -31,6 +31,14 @@ export class LedgerRepository {
     );
   }
 
+  async findReversalByEntryId(entryId: string, client: TransactionClient) {
+    return queryOne<{ id: string }>(
+      'SELECT id FROM journal_entries WHERE reversed_entry_id = $1 LIMIT 1',
+      [entryId],
+      client,
+    );
+  }
+
   async findLinesByEntryId(entryId: string, client: TransactionClient) {
     return queryMany<{
       id: string; account_id: string; debit_credit: string;
@@ -42,24 +50,54 @@ export class LedgerRepository {
     );
   }
 
-  async createJournalEntry(
+  async postEntryViaProcedure(
     request: {
-      subledger: string; description: string; correlationId: string;
-      idempotencyKey: string; businessDay: string; metadata?: Record<string, unknown>;
+      subledger: string; description: string; reference: string; correlationId: string;
+      idempotencyKey: string; businessDay: string; metadata?: Record<string, unknown>; lines: PostingLine[]; reversedEntryId?: string | null;
     },
     client: TransactionClient,
   ) {
-    return queryOne<{ id: string; entry_number: number; status: string; created_at: Date }>(
-      `INSERT INTO journal_entries (subledger, description, correlation_id, idempotency_key, business_day, metadata)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, entry_number, status, created_at`,
+    await queryOne(
+      `SELECT * FROM ledger_post_entry($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
       [
         request.subledger,
         request.description,
+        request.reference,
         request.correlationId,
         request.idempotencyKey,
         request.businessDay,
         JSON.stringify(request.metadata ?? {}),
+        JSON.stringify(request.lines),
+        request.reversedEntryId ?? null,
+      ],
+      client,
+    );
+
+    return this.findByIdempotencyKey(request.idempotencyKey, client);
+  }
+
+  async createJournalEntry(
+    request: {
+      subledger: string; description: string; correlationId: string;
+      idempotencyKey: string; businessDay: string; metadata?: Record<string, unknown>;
+      reference: string; entryHash: string; id?: string;
+    },
+    client: TransactionClient,
+  ) {
+    return queryOne<{ id: string; entry_number: number; status: string; created_at: Date }>(
+      `INSERT INTO journal_entries (id, subledger, description, reference, correlation_id, idempotency_key, business_day, metadata, entry_hash)
+       VALUES (COALESCE($1, uuid_generate_v4()), $2, $3, $4, $5, $6, $7, $8, $9)
+       RETURNING id, entry_number, status, created_at`,
+      [
+        request.id ?? undefined,
+        request.subledger,
+        request.description,
+        request.reference,
+        request.correlationId,
+        request.idempotencyKey,
+        request.businessDay,
+        JSON.stringify(request.metadata ?? {}),
+        request.entryHash,
       ],
       client,
     ) as Promise<{ id: string; entry_number: number; status: string; created_at: Date }>;
@@ -68,21 +106,24 @@ export class LedgerRepository {
   async createReversalEntry(
     request: {
       subledger: string; description: string; correlationId: string;
-      idempotencyKey: string; businessDay: string; reversedEntryId: string;
+      idempotencyKey: string; businessDay: string; reversedEntryId: string; reference: string; entryHash: string; id?: string;
     },
     client: TransactionClient,
   ) {
     return queryOne<{ id: string; entry_number: number; status: string; created_at: Date }>(
-      `INSERT INTO journal_entries (subledger, description, correlation_id, idempotency_key, business_day, reversed_entry_id, metadata)
-       VALUES ($1, $2, $3, $4, $5, $6, '{}')
+      `INSERT INTO journal_entries (id, subledger, description, reference, correlation_id, idempotency_key, business_day, reversed_entry_id, metadata, entry_hash)
+       VALUES (COALESCE($1, uuid_generate_v4()), $2, $3, $4, $5, $6, $7, $8, '{}', $9)
        RETURNING id, entry_number, status, created_at`,
       [
+        request.id ?? undefined,
         request.subledger,
         request.description,
+        request.reference,
         request.correlationId,
         request.idempotencyKey,
         request.businessDay,
         request.reversedEntryId,
+        request.entryHash,
       ],
       client,
     ) as Promise<{ id: string; entry_number: number; status: string; created_at: Date }>;
@@ -108,13 +149,6 @@ export class LedgerRepository {
     return results;
   }
 
-  async markEntryReversed(entryId: string, client: TransactionClient) {
-    await query(
-      `UPDATE journal_entries SET status = 'REVERSED' WHERE id = $1`,
-      [entryId],
-      client,
-    );
-  }
 
   async createOutboxEvent(
     eventType: string,

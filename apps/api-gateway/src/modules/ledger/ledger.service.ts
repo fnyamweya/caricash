@@ -3,10 +3,14 @@ import { LedgerRepository } from './ledger.repository';
 import { withTransaction } from '@caricash/db';
 import { PostingRequest, ValidationError, ConflictError, NotFoundError, PaginationParams } from '@caricash/common';
 import { EventTypes } from '@caricash/events';
+import { AuditService } from '../audit/audit.service';
 
 @Injectable()
 export class LedgerService {
-  constructor(private readonly repo: LedgerRepository) {}
+  constructor(
+    private readonly repo: LedgerRepository,
+    private readonly auditService: AuditService,
+  ) {}
 
   async postEntry(request: PostingRequest) {
     // Validate lines
@@ -46,15 +50,18 @@ export class LedgerService {
     }
 
     return withTransaction(async (client) => {
-      // Check idempotency
-      const existing = await this.repo.findByIdempotencyKey(request.idempotencyKey, client);
-      if (existing) {
-        return existing;
+      if (!request.description || request.description.trim().length === 0) {
+        throw new ValidationError('Narration is required');
+      }
+      if (!request.reference || request.reference.trim().length === 0) {
+        throw new ValidationError('Reference is required');
       }
 
-      // Create journal entry + lines + outbox event atomically
-      const entry = await this.repo.createJournalEntry(request, client);
-      const lines = await this.repo.createJournalLines(entry.id, request.lines, client);
+      // Create journal entry + lines via stored procedure
+      const entry = await this.repo.postEntryViaProcedure(request, client);
+      if (!entry) {
+        throw new ConflictError('Failed to create journal entry');
+      }
 
       // Write outbox event in same transaction
       await this.repo.createOutboxEvent(
@@ -65,21 +72,43 @@ export class LedgerService {
           entryNumber: entry.entry_number,
           subledger: request.subledger,
           description: request.description,
+          reference: request.reference,
           businessDay: request.businessDay,
           idempotencyKey: request.idempotencyKey,
           lines: request.lines,
           metadata: request.metadata ?? {},
+          entryHash: entry.entry_hash,
         },
         client,
       );
 
-      return { ...entry, lines };
+      const auditEvent = await this.auditService.recordWithClient({
+        actorType: 'SYSTEM',
+        action: 'ledger.post',
+        resourceType: 'ledger_entry',
+        resourceId: entry.id,
+        payload: {
+          entryId: entry.id,
+          entryHash: entry.entry_hash,
+          idempotencyKey: request.idempotencyKey,
+        },
+        correlationId: request.correlationId,
+      }, client);
+
+      return {
+        ...entry,
+        receipt: {
+          entryId: entry.id,
+          entryHash: entry.entry_hash,
+          auditEventHash: auditEvent.hash,
+        },
+      };
     }, { isolationLevel: 'SERIALIZABLE' });
   }
 
   async reverseEntry(
     entryId: string,
-    params: { idempotencyKey: string; correlationId: string; description: string; businessDay: string },
+    params: { idempotencyKey: string; correlationId: string; description: string; reference: string; businessDay: string },
   ) {
     return withTransaction(async (client) => {
       // Check idempotency
@@ -93,7 +122,8 @@ export class LedgerService {
       if (!original) {
         throw new NotFoundError('JournalEntry', entryId);
       }
-      if (original.status === 'REVERSED') {
+      const existingReversal = await this.repo.findReversalByEntryId(entryId, client);
+      if (existingReversal) {
         throw new ConflictError('Entry is already reversed');
       }
 
@@ -108,22 +138,20 @@ export class LedgerService {
         currencyCode: line.currency_code,
       }));
 
-      const reversalEntry = await this.repo.createReversalEntry(
+      const reversalEntry = await this.repo.postEntryViaProcedure(
         {
           subledger: original.subledger,
           description: params.description,
+          reference: params.reference,
           correlationId: params.correlationId,
           idempotencyKey: params.idempotencyKey,
           businessDay: params.businessDay,
+          lines: reversedLines,
+          metadata: {},
           reversedEntryId: entryId,
         },
         client,
       );
-
-      const lines = await this.repo.createJournalLines(reversalEntry.id, reversedLines, client);
-
-      // Mark original as reversed
-      await this.repo.markEntryReversed(entryId, client);
 
       // Outbox event
       await this.repo.createOutboxEvent(
@@ -134,13 +162,34 @@ export class LedgerService {
           originalEntryId: entryId,
           subledger: original.subledger,
           description: params.description,
+          reference: params.reference,
           businessDay: params.businessDay,
           lines: reversedLines,
         },
         client,
       );
 
-      return { ...reversalEntry, lines };
+      const auditEvent = await this.auditService.recordWithClient({
+        actorType: 'SYSTEM',
+        action: 'ledger.reverse',
+        resourceType: 'ledger_entry',
+        resourceId: reversalEntry.id,
+        payload: {
+          entryId: reversalEntry.id,
+          entryHash: reversalEntry.entry_hash,
+          originalEntryId: entryId,
+        },
+        correlationId: params.correlationId,
+      }, client);
+
+      return {
+        ...reversalEntry,
+        receipt: {
+          entryId: reversalEntry.id,
+          entryHash: reversalEntry.entry_hash,
+          auditEventHash: auditEvent.hash,
+        },
+      };
     }, { isolationLevel: 'SERIALIZABLE' });
   }
 
