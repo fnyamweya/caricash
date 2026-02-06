@@ -1,4 +1,4 @@
-const MIN_EFFECTIVE_DATE = '0000-00-00';
+const MIN_EFFECTIVE_DATE = '0001-01-01';
 
 export function resolveEffectiveRecord<T extends { status?: string; effective_from?: string; effectiveFrom?: string }>(
   records: T[],
@@ -17,9 +17,8 @@ export function resolveEffectiveRecord<T extends { status?: string; effective_fr
       return b.version - a.version;
     });
 
-  const match = ordered.find(({ record }) => {
+  const match = ordered.find(({ record, effectiveFrom }) => {
     const status = record.status ?? 'ACTIVE';
-    const effectiveFrom = record.effective_from ?? record.effectiveFrom ?? today;
     return status === 'ACTIVE' && effectiveFrom <= today;
   });
 
