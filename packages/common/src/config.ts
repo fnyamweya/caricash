@@ -6,7 +6,7 @@ export function resolveEffectiveRecord<T extends { status?: string; effective_fr
   const ordered = records
     .map((record) => ({
       record,
-      effectiveFrom: record.effective_from ?? record.effectiveFrom ?? '',
+      effectiveFrom: record.effective_from ?? record.effectiveFrom ?? '0000-00-00',
       version: (record as { version?: number }).version ?? 0,
     }))
     .sort((a, b) => {

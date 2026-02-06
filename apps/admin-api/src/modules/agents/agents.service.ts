@@ -34,14 +34,13 @@ export class AgentsService {
       throw new ConflictError('Failed to create agent');
     }
 
-    const parentAgentId = agent.parent_agent_id;
     await query(
       `INSERT INTO outbox_events (event_type, correlation_id, payload)
        VALUES ($1, $2, $3)`,
       [
         EventTypes.AGENT_CREATED,
         params.correlationId ?? null,
-        JSON.stringify({ agentId: agent.id, principalId: principal.id, agentNumber: agent.agent_number, level: agent.level, parentAgentId, countryCode: agent.country_code }),
+        JSON.stringify({ agentId: agent.id, principalId: principal.id, agentNumber: agent.agent_number, level: agent.level, parentAgentId: agent.parent_agent_id, countryCode: agent.country_code }),
       ],
     );
 
@@ -67,14 +66,13 @@ export class AgentsService {
       throw new ConflictError('Failed to update agent');
     }
 
-    const parentAgentId = agent.parent_agent_id;
     await query(
       `INSERT INTO outbox_events (event_type, correlation_id, payload)
        VALUES ($1, $2, $3)`,
       [
         EventTypes.AGENT_UPDATED,
         params.correlationId ?? null,
-        JSON.stringify({ agentId: agent.id, status: agent.status, parentAgentId, level: agent.level }),
+        JSON.stringify({ agentId: agent.id, status: agent.status, parentAgentId: agent.parent_agent_id, level: agent.level }),
       ],
     );
 
