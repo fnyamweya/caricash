@@ -76,6 +76,45 @@ jobs:
           PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT version FROM schema_migrations ORDER BY version;"
           PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename;"
 
+      - name: Verify ledger immutability triggers
+        run: |
+          PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT tgname FROM pg_trigger WHERE tgrelid = 'journal_entries'::regclass;"
+          PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT tgname FROM pg_trigger WHERE tgrelid = 'journal_lines'::regclass;"
+
+      - name: Check for direct journal table writes (forbidden)
+        run: |
+          if grep -r "INSERT INTO journal_entries\|INSERT INTO journal_lines\|UPDATE journal_entries\|DELETE FROM journal_entries" apps packages --include="*.ts" --exclude="*.test.ts" | grep -v "DEPRECATED_DO_NOT_USE\|migrations"; then
+            echo "STOP: Direct journal table writes detected!"
+            exit 1
+          fi
+
+      - name: Verify obligation registry exists
+        run: |
+          if [ ! -f policies/obligations/registry.json ]; then
+            echo "FAIL: Obligation registry missing"
+            exit 1
+          fi
+
+      - name: Verify PII registry exists
+        run: |
+          if [ ! -f docs/pii-registry.yaml ]; then
+            echo "FAIL: PII registry missing"
+            exit 1
+          fi
+
+      - name: Check for PII in logs (sample test files)
+        run: |
+          if grep -r "console.log.*national_id\|console.log.*passport\|logger.*pin[^_]" apps packages --include="*.ts" --exclude="*.test.ts" || true; then
+            echo "WARNING: Potential PII in logs detected"
+          fi
+
+      - name: Validate event schemas exist
+        run: |
+          if [ ! -f events/schemas/ledger.posted.v1.json ]; then
+            echo "FAIL: Event schemas missing"
+            exit 1
+          fi
+
       - name: Security audit
         run: pnpm audit --audit-level=critical || true
         continue-on-error: true

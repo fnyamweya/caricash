@@ -76,7 +76,11 @@ export class LedgerRepository {
     return this.findByIdempotencyKey(request.idempotencyKey, client);
   }
 
-  async createJournalEntry(
+  /**
+   * DEPRECATED: Direct journal_entries INSERT is forbidden.
+   * Use postEntryViaProcedure() which calls ledger_post_entry() stored procedure.
+   */
+  private async createJournalEntry_DEPRECATED_DO_NOT_USE(
     request: {
       subledger: string; description: string; correlationId: string;
       idempotencyKey: string; businessDay: string; metadata?: Record<string, unknown>;
@@ -84,69 +88,33 @@ export class LedgerRepository {
     },
     client: TransactionClient,
   ) {
-    return queryOne<{ id: string; entry_number: number; status: string; created_at: Date }>(
-      `INSERT INTO journal_entries (id, subledger, description, reference, correlation_id, idempotency_key, business_day, metadata, entry_hash)
-       VALUES (COALESCE($1, uuid_generate_v4()), $2, $3, $4, $5, $6, $7, $8, $9)
-       RETURNING id, entry_number, status, created_at`,
-      [
-        request.id ?? undefined,
-        request.subledger,
-        request.description,
-        request.reference,
-        request.correlationId,
-        request.idempotencyKey,
-        request.businessDay,
-        JSON.stringify(request.metadata ?? {}),
-        request.entryHash,
-      ],
-      client,
-    ) as Promise<{ id: string; entry_number: number; status: string; created_at: Date }>;
+    throw new Error('STOP: Direct journal_entries INSERT is forbidden. Use ledger_post_entry() stored procedure.');
   }
 
-  async createReversalEntry(
+  /**
+   * DEPRECATED: Direct journal_entries INSERT for reversals is forbidden.
+   * Use postEntryViaProcedure() with reversedEntryId parameter instead.
+   */
+  private async createReversalEntry_DEPRECATED_DO_NOT_USE(
     request: {
       subledger: string; description: string; correlationId: string;
       idempotencyKey: string; businessDay: string; reversedEntryId: string; reference: string; entryHash: string; id?: string;
     },
     client: TransactionClient,
   ) {
-    return queryOne<{ id: string; entry_number: number; status: string; created_at: Date }>(
-      `INSERT INTO journal_entries (id, subledger, description, reference, correlation_id, idempotency_key, business_day, reversed_entry_id, metadata, entry_hash)
-       VALUES (COALESCE($1, uuid_generate_v4()), $2, $3, $4, $5, $6, $7, $8, '{}', $9)
-       RETURNING id, entry_number, status, created_at`,
-      [
-        request.id ?? undefined,
-        request.subledger,
-        request.description,
-        request.reference,
-        request.correlationId,
-        request.idempotencyKey,
-        request.businessDay,
-        request.reversedEntryId,
-        request.entryHash,
-      ],
-      client,
-    ) as Promise<{ id: string; entry_number: number; status: string; created_at: Date }>;
+    throw new Error('STOP: Direct journal_entries INSERT is forbidden. Use ledger_post_entry() stored procedure.');
   }
 
-  async createJournalLines(
+  /**
+   * DEPRECATED: Direct journal_lines INSERT is forbidden.
+   * Use postEntryViaProcedure() which calls ledger_post_entry() stored procedure.
+   */
+  private async createJournalLines_DEPRECATED_DO_NOT_USE(
     entryId: string,
     lines: PostingLine[],
     client: TransactionClient,
   ) {
-    const results = [];
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const row = await queryOne(
-        `INSERT INTO journal_lines (entry_id, account_id, debit_credit, amount, currency_code, line_number)
-         VALUES ($1, $2, $3, $4, $5, $6)
-         RETURNING *`,
-        [entryId, line.accountId, line.debitCredit, line.amount, line.currencyCode, i + 1],
-        client,
-      );
-      results.push(row);
-    }
-    return results;
+    throw new Error('STOP: Direct journal_lines INSERT is forbidden. Use ledger_post_entry() stored procedure.');
   }
 
 

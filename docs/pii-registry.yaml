@@ -1,0 +1,169 @@
+version: "1.0"
+description: PII Field Classification Registry for Caricash
+last_updated: "2024-02-06"
+
+# Field classifications with allowed sinks and redaction strategies
+fields:
+  - name: national_id
+    classification: SENSITIVE_PII
+    allowed_sinks: [db]
+    redaction_strategy: hash
+    description: National identification number
+
+  - name: passport_number
+    classification: SENSITIVE_PII
+    allowed_sinks: [db]
+    redaction_strategy: hash
+    description: Passport number
+
+  - name: passport_no
+    classification: SENSITIVE_PII
+    allowed_sinks: [db]
+    redaction_strategy: hash
+    description: Passport number (alt)
+
+  - name: dob
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Date of birth
+
+  - name: date_of_birth
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Date of birth (alt)
+
+  - name: birth_date
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Date of birth (alt2)
+
+  - name: address
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Physical address
+
+  - name: msisdn
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Mobile phone number
+
+  - name: phone
+    classification: PII
+    allowed_sinks: [db, audit]
+    redaction_strategy: mask
+    description: Phone number
+
+  - name: email
+    classification: PII
+    allowed_sinks: [db, audit, webhooks]
+    redaction_strategy: mask
+    description: Email address
+
+  - name: pin
+    classification: SENSITIVE_PII
+    allowed_sinks: []
+    redaction_strategy: drop
+    description: Raw PIN (should never be stored/logged)
+
+  - name: pin_hash
+    classification: CONFIDENTIAL
+    allowed_sinks: [db]
+    redaction_strategy: drop
+    description: PIN hash (argon2id)
+
+  - name: document
+    classification: SENSITIVE_PII
+    allowed_sinks: [db]
+    redaction_strategy: drop
+    description: Document content
+
+  - name: document_number
+    classification: SENSITIVE_PII
+    allowed_sinks: [db]
+    redaction_strategy: hash
+    description: Document identifier
+
+  - name: file_ref
+    classification: CONFIDENTIAL
+    allowed_sinks: [db, audit]
+    redaction_strategy: hash
+    description: File storage reference
+
+  - name: file_hash
+    classification: INTERNAL
+    allowed_sinks: [db, audit]
+    redaction_strategy: none
+    description: File content hash (already hashed)
+
+  - name: jwt
+    classification: CONFIDENTIAL
+    allowed_sinks: []
+    redaction_strategy: drop
+    description: JWT tokens
+
+  - name: access_token
+    classification: CONFIDENTIAL
+    allowed_sinks: []
+    redaction_strategy: drop
+    description: Access token
+
+  - name: refresh_token
+    classification: CONFIDENTIAL
+    allowed_sinks: []
+    redaction_strategy: drop
+    description: Refresh token
+
+  - name: token_hash
+    classification: CONFIDENTIAL
+    allowed_sinks: [db]
+    redaction_strategy: drop
+    description: Token hash
+
+# Sink definitions
+sinks:
+  db:
+    description: PostgreSQL database
+    requires_encryption: true
+  
+  audit:
+    description: Audit trail (append-only)
+    requires_encryption: false
+    notes: Hash or mask sensitive fields before audit
+  
+  logs:
+    description: Application logs (pino)
+    requires_encryption: false
+    notes: Never log PII/SENSITIVE_PII
+  
+  webhooks:
+    description: Outbound webhooks
+    requires_encryption: true
+    notes: Allowlist only; drop unknown fields
+  
+  elastic:
+    description: Elasticsearch indexing
+    requires_encryption: false
+    notes: Index only masked/hashed PII
+
+# Redaction strategies
+redaction_strategies:
+  drop:
+    description: Remove field entirely from output
+  
+  mask:
+    description: Replace with [REDACTED] or masked pattern
+    examples:
+      - "msisdn: 246555**** -> 246555****"
+      - "email: user@example.com -> u***@e***.com"
+  
+  hash:
+    description: Replace with SHA-256 hash (for correlation, not reversal)
+    algorithm: SHA-256
+  
+  none:
+    description: No redaction (already safe or non-sensitive)

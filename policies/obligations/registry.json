@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Obligation Registry",
+  "description": "Registry of all policy obligations with validation schemas and enforcement metadata",
+  "version": "1.0.0",
+  "obligations": {
+    "security.require_mfa": {
+      "description": "Requires multi-factor authentication for the action",
+      "severity": "HIGH",
+      "params_schema": {
+        "type": "object",
+        "properties": {
+          "mfa_types": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["TOTP", "SMS", "EMAIL"] }
+          },
+          "grace_period_seconds": { "type": "number", "minimum": 0 }
+        }
+      },
+      "enforcement_handler": "MfaEnforcementHandler",
+      "evidence_required": ["X-MFA-ASSERTION"],
+      "issued_by": ["phase2.yaml"]
+    },
+    "security.require_device_binding": {
+      "description": "Requires device binding verification for agents/tellers",
+      "severity": "HIGH",
+      "params_schema": {
+        "type": "object",
+        "properties": {
+          "device_types": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["MOBILE", "TABLET", "DESKTOP"] }
+          }
+        }
+      },
+      "enforcement_handler": "DeviceBindingEnforcementHandler",
+      "evidence_required": ["X-DEVICE-ASSERTION"],
+      "issued_by": ["phase2.yaml"]
+    },
+    "governance.require_maker_checker": {
+      "description": "Requires approval via maker-checker workflow",
+      "severity": "CRITICAL",
+      "params_schema": {
+        "type": "object",
+        "properties": {
+          "min_approvers": { "type": "number", "minimum": 1 },
+          "required_roles": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["min_approvers"]
+      },
+      "enforcement_handler": "MakerCheckerEnforcementHandler",
+      "evidence_required": ["X-APPROVAL-REQUEST-ID"],
+      "issued_by": ["phase2.yaml"]
+    },
+    "compliance.require_kyc_tier": {
+      "description": "Requires minimum KYC tier for the action",
+      "severity": "CRITICAL",
+      "params_schema": {
+        "type": "object",
+        "properties": {
+          "min_tier": { "type": "string", "enum": ["TIER_0", "TIER_1", "TIER_2", "TIER_3"] }
+        },
+        "required": ["min_tier"]
+      },
+      "enforcement_handler": "KycTierEnforcementHandler",
+      "evidence_required": [],
+      "issued_by": []
+    },
+    "ops.require_ticket_reference": {
+      "description": "Requires support ticket reference for audit trail",
+      "severity": "MEDIUM",
+      "params_schema": {
+        "type": "object",
+        "properties": {
+          "ticket_system": { "type": "string" }
+        }
+      },
+      "enforcement_handler": "TicketReferenceEnforcementHandler",
+      "evidence_required": ["X-TICKET-REF"],
+      "issued_by": []
+    }
+  }
+}
