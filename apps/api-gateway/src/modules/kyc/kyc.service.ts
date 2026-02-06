@@ -11,12 +11,7 @@ export class KycService {
   constructor(private readonly repo: KycRepository) {}
 
   static resolveRequirementSet<T extends { status: string; effective_from: string; version: number }>(requirementSets: T[], now: Date): T | null {
-    const ordered = [...requirementSets].sort((a, b) => {
-      const dateCompare = b.effective_from.localeCompare(a.effective_from);
-      if (dateCompare !== 0) return dateCompare;
-      return b.version - a.version;
-    });
-    return resolveEffectiveRecord(ordered, now) as T | null;
+    return resolveEffectiveRecord(requirementSets, now) as T | null;
   }
 
   async getRequirements(params: { countryCode: string; userType: string; tier: string }) {
