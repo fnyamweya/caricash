@@ -152,6 +152,9 @@ export class LedgerService {
         },
         client,
       );
+      if (!reversalEntry) {
+        throw new ConflictError('Failed to create reversal entry');
+      }
 
       // Outbox event
       await this.repo.createOutboxEvent(

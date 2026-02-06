@@ -1,5 +1,9 @@
 import { AgentsService } from './agents.service';
 
+jest.mock('@caricash/db', () => ({
+  query: jest.fn(),
+}));
+
 const baseRepo = () => ({
   createPrincipal: jest.fn().mockResolvedValue({ id: 'principal-1' }),
   createAgent: jest.fn().mockResolvedValue({ id: 'agent-1', agent_number: 'AG-BB-001', level: 1, parent_agent_id: null, country_code: 'BB' }),

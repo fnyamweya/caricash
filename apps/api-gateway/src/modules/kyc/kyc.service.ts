@@ -1,16 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { KycRepository } from './kyc.repository';
+import { KycRepository, KycDocumentRow } from './kyc.repository';
 import { encryptPayload, hashPayload, decryptPayload } from '@caricash/crypto';
 import { getCacheClient, resolveEffectiveRecord } from '@caricash/common';
 import { EventTypes } from '@caricash/events';
 import { query } from '@caricash/db';
+import { ConflictError } from '@caricash/common';
 
 @Injectable()
 export class KycService {
   constructor(private readonly repo: KycRepository) {}
 
-  static resolveRequirementSet(requirementSets: Array<{ status: string; effective_from: string; version: number }>, now: Date) {
-    return resolveEffectiveRecord(requirementSets, now);
+  static resolveRequirementSet<T extends { status: string; effective_from: string; version: number }>(requirementSets: T[], now: Date): T | null {
+    const ordered = [...requirementSets].sort((a, b) => {
+      const dateCompare = b.effective_from.localeCompare(a.effective_from);
+      if (dateCompare !== 0) return dateCompare;
+      return b.version - a.version;
+    });
+    return resolveEffectiveRecord(ordered, now) as T | null;
   }
 
   async getRequirements(params: { countryCode: string; userType: string; tier: string }) {
@@ -50,7 +56,7 @@ export class KycService {
       userType: params.userType,
       tier: params.tier,
     });
-    return this.repo.createProfile({
+    const profile = await this.repo.createProfile({
       countryCode: params.countryCode,
       userType: params.userType,
       userId: params.userId,
@@ -58,6 +64,10 @@ export class KycService {
       requirementSetId: requirementSet?.id,
       versionApplied: requirementSet?.version,
     });
+    if (!profile) {
+      throw new ConflictError('Failed to create KYC profile');
+    }
+    return profile;
   }
 
   async submitKyc(params: {
@@ -82,7 +92,7 @@ export class KycService {
     const riskScore = this.computeRiskScore(params.fields, missing, missingDocs);
     const riskReason = missingDocs.length > 0 ? 'MISSING_DOCS' : 'STANDARD';
 
-    await this.repo.updateProfile({
+    const updated = await this.repo.updateProfile({
       profileId: profile.id,
       status: 'PENDING',
       requirementSetId: requirement?.requirementSet?.id,
@@ -90,6 +100,9 @@ export class KycService {
       riskScore,
       riskReason,
     });
+    if (!updated) {
+      throw new ConflictError('Failed to update KYC profile');
+    }
 
     for (const [fieldKey, value] of Object.entries(params.fields)) {
       const encrypted = encryptPayload(value);
@@ -113,6 +126,9 @@ export class KycService {
 
     const queue = riskScore >= 70 ? 'HIGH_RISK' : 'STANDARD';
     const review = await this.repo.createReview({ profileId: profile.id, queue });
+    if (!review) {
+      throw new ConflictError('Failed to create KYC review');
+    }
 
     await query(
       `INSERT INTO outbox_events (event_type, correlation_id, payload)
@@ -223,7 +239,7 @@ export class KycService {
     return Math.floor(diff / (365.25 * 24 * 60 * 60 * 1000));
   }
 
-  private verifyDocumentIntegrity(doc: { doc_type: string; file_ref: string; file_hash: string; metadata_hash: string; metadata_encrypted?: unknown }) {
+  private verifyDocumentIntegrity(doc: KycDocumentRow) {
     const encrypted = doc.metadata_encrypted as { ciphertext?: string; iv?: string; tag?: string; keyId?: string } | undefined;
     const metadata = encrypted?.ciphertext ? (decryptPayload(encrypted as { ciphertext: string; iv: string; tag: string; keyId: string }) as Record<string, unknown>) : {};
     const expectedHash = hashPayload({

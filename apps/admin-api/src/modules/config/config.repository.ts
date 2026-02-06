@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { queryMany } from '@caricash/db';
 
+type ConfigRow = Record<string, unknown>;
+
 @Injectable()
 export class ConfigRepository {
-  async listCountries(): Promise<Record<string, unknown>[]> {
-    return queryMany(
+  async listCountries(): Promise<ConfigRow[]> {
+    return queryMany<ConfigRow>(
       `SELECT c.code, c.name, c.is_active,
               array_agg(json_build_object('code', cc.currency_code, 'is_default', cc.is_default)) as currencies
        FROM countries c
@@ -14,13 +16,13 @@ export class ConfigRepository {
     );
   }
 
-  async listCurrencies(): Promise<Record<string, unknown>[]> {
-    return queryMany(
+  async listCurrencies(): Promise<ConfigRow[]> {
+    return queryMany<ConfigRow>(
       'SELECT code, name, decimals, is_active FROM currencies ORDER BY code',
     );
   }
 
-  async listKycRequirementSets(params: { countryCode?: string; userType?: string; tier?: string }) {
+  async listKycRequirementSets(params: { countryCode?: string; userType?: string; tier?: string }): Promise<ConfigRow[]> {
     const conditions: string[] = [];
     const values: unknown[] = [];
     if (params.countryCode) {
@@ -36,27 +38,27 @@ export class ConfigRepository {
       conditions.push(`tier = $${values.length}`);
     }
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
-    return queryMany(`SELECT * FROM kyc_requirement_sets ${where} ORDER BY effective_from DESC, version DESC`, values);
+    return queryMany<ConfigRow>(`SELECT * FROM kyc_requirement_sets ${where} ORDER BY effective_from DESC, version DESC`, values);
   }
 
-  async listPermissionCatalogs(countryCode?: string) {
+  async listPermissionCatalogs(countryCode?: string): Promise<ConfigRow[]> {
     if (!countryCode) {
-      return queryMany('SELECT * FROM permission_catalogs ORDER BY effective_from DESC, version DESC');
+      return queryMany<ConfigRow>('SELECT * FROM permission_catalogs ORDER BY effective_from DESC, version DESC');
     }
-    return queryMany('SELECT * FROM permission_catalogs WHERE country_code = $1 ORDER BY effective_from DESC, version DESC', [countryCode]);
+    return queryMany<ConfigRow>('SELECT * FROM permission_catalogs WHERE country_code = $1 ORDER BY effective_from DESC, version DESC', [countryCode]);
   }
 
-  async listPolicyBundles(countryCode?: string) {
+  async listPolicyBundles(countryCode?: string): Promise<ConfigRow[]> {
     if (!countryCode) {
-      return queryMany('SELECT * FROM policy_bundles ORDER BY effective_from DESC, version DESC');
+      return queryMany<ConfigRow>('SELECT * FROM policy_bundles ORDER BY effective_from DESC, version DESC');
     }
-    return queryMany('SELECT * FROM policy_bundles WHERE country_code = $1 ORDER BY effective_from DESC, version DESC', [countryCode]);
+    return queryMany<ConfigRow>('SELECT * FROM policy_bundles WHERE country_code = $1 ORDER BY effective_from DESC, version DESC', [countryCode]);
   }
 
-  async listRetentionPolicies(countryCode?: string) {
+  async listRetentionPolicies(countryCode?: string): Promise<ConfigRow[]> {
     if (!countryCode) {
-      return queryMany('SELECT * FROM data_retention_policies ORDER BY country_code, data_type');
+      return queryMany<ConfigRow>('SELECT * FROM data_retention_policies ORDER BY country_code, data_type');
     }
-    return queryMany('SELECT * FROM data_retention_policies WHERE country_code = $1 ORDER BY data_type', [countryCode]);
+    return queryMany<ConfigRow>('SELECT * FROM data_retention_policies WHERE country_code = $1 ORDER BY data_type', [countryCode]);
   }
 }

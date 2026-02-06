@@ -20,6 +20,7 @@
     "@caricash/common": "workspace:*",
     "@caricash/crypto": "workspace:*",
     "@caricash/db": "workspace:*",
+    "@caricash/events": "workspace:*",
     "@caricash/observability": "workspace:*",
     "@caricash/policy": "workspace:*"
   },

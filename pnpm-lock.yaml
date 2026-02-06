@@ -19,6 +19,9 @@ importers:
       '@caricash/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@caricash/events':
+        specifier: workspace:*
+        version: link:../../packages/events
       '@caricash/observability':
         specifier: workspace:*
         version: link:../../packages/observability

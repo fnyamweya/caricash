@@ -23,6 +23,10 @@ describe('MerchantAccessService', () => {
       roleName: 'MERCHANT_OWNER',
     });
 
+    expect(result).not.toBeNull();
+    if (!result) {
+      throw new Error('Expected membership');
+    }
     expect(result.id).toBe('membership-1');
     expect(iamRepo.createMembership).toHaveBeenCalled();
   });

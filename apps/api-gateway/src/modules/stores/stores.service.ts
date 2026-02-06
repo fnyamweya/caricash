@@ -24,6 +24,9 @@ export class StoresService {
       countryCode: params.countryCode,
       displayName: params.legalName,
     });
+    if (!principal) {
+      throw new ConflictError('Failed to create merchant principal');
+    }
 
     const storeNumber = this.generateStoreNumber(params.countryCode);
     const store = await this.storesRepo.createStore({
@@ -32,6 +35,9 @@ export class StoresService {
       storeNumber,
       legalName: params.legalName,
     });
+    if (!store) {
+      throw new ConflictError('Failed to create store');
+    }
 
     await this.iamRepo.createMembership({
       userId: params.ownerUserId,
@@ -44,6 +50,9 @@ export class StoresService {
     for (let i = 1; i <= tillCount; i++) {
       const tillNumber = `${storeNumber}-T${String(i).padStart(3, '0')}`;
       const till = await this.storesRepo.createTill({ storeId: store.id, tillNumber });
+      if (!till) {
+        throw new ConflictError('Failed to create till');
+      }
       tills.push(till);
     }
 
@@ -67,6 +76,9 @@ export class StoresService {
       throw new ValidationError('No merchant membership found');
     }
     const store = await this.storesRepo.findStoreByPrincipal(merchantMembership.principal_id);
+    if (!store) {
+      throw new ValidationError('Store not found');
+    }
     return { store, membership: merchantMembership };
   }
 

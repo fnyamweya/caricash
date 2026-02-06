@@ -54,6 +54,9 @@ export class CustomersService {
           displayName: params.displayName,
           pinHash,
         });
+        if (!user) {
+          throw new ConflictError('Failed to create user');
+        }
 
         const principal = await this.iamRepo.createPrincipal({
           principalType: 'CUSTOMER',
@@ -61,6 +64,9 @@ export class CustomersService {
           displayName: params.displayName,
           externalRef: user.id,
         });
+        if (!principal) {
+          throw new ConflictError('Failed to create customer principal');
+        }
 
         const role = await this.iamRepo.findRoleByName('CUSTOMER_SELF');
         if (!role) {

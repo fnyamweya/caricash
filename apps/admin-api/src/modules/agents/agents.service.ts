@@ -56,6 +56,9 @@ export class AgentsService {
       parentAgentId: params.parentAgentId,
       level: params.level,
     });
+    if (!agent) {
+      throw new ValidationError('Agent not found');
+    }
 
     await query(
       `INSERT INTO outbox_events (event_type, correlation_id, payload)
@@ -63,7 +66,7 @@ export class AgentsService {
       [
         EventTypes.AGENT_UPDATED,
         params.correlationId ?? null,
-        JSON.stringify({ agentId: agent?.id, status: agent?.status, parentAgentId: agent?.parent_agent_id, level: agent?.level }),
+        JSON.stringify({ agentId: agent.id, status: agent.status, parentAgentId: agent.parent_agent_id, level: agent.level }),
       ],
     );
 
