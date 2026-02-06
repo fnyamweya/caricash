@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'copilot/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: caricash
+          POSTGRES_PASSWORD: caricash_dev
+          POSTGRES_DB: caricash
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U caricash"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DATABASE_URL: postgresql://caricash:caricash_dev@localhost:5432/caricash
+      NODE_ENV: test
+      JWT_SECRET: test-secret-do-not-use-in-production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: TypeCheck
+        run: pnpm typecheck
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run database migrations
+        run: node packages/db/dist/migrate.js migrations/
+
+      - name: Verify migration applied
+        run: |
+          PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT version FROM schema_migrations ORDER BY version;"
+          PGPASSWORD=caricash_dev psql -h localhost -U caricash -d caricash -c "SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename;"
+
+      - name: Security audit
+        run: pnpm audit --audit-level=critical || true
+        continue-on-error: true
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+        continue-on-error: true
