@@ -1,3 +1,5 @@
+const MIN_EFFECTIVE_DATE = '0000-00-00';
+
 export function resolveEffectiveRecord<T extends { status?: string; effective_from?: string; effectiveFrom?: string }>(
   records: T[],
   now: Date = new Date(),
@@ -6,12 +8,12 @@ export function resolveEffectiveRecord<T extends { status?: string; effective_fr
   const ordered = records
     .map((record) => ({
       record,
-      effectiveFrom: record.effective_from ?? record.effectiveFrom ?? '0000-00-00',
+      effectiveFrom: record.effective_from ?? record.effectiveFrom ?? MIN_EFFECTIVE_DATE,
       version: (record as { version?: number }).version ?? 0,
     }))
     .sort((a, b) => {
-      const dateCompare = b.effectiveFrom.localeCompare(a.effectiveFrom);
-      if (dateCompare !== 0) return dateCompare;
+      if (b.effectiveFrom > a.effectiveFrom) return 1;
+      if (b.effectiveFrom < a.effectiveFrom) return -1;
       return b.version - a.version;
     });
 
