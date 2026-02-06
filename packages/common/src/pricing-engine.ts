@@ -53,7 +53,9 @@ export interface PricingResult {
 
 /**
  * Calculate the output of a single pricing rule given an input amount.
- * All calculations use string-based arithmetic to avoid floating point issues.
+ * NOTE: Uses Number for intermediate arithmetic. For production with sub-cent
+ * precision requirements, replace with a decimal library (e.g., decimal.js).
+ * Final values are stored as NUMERIC(20,8) in the database.
  */
 export function calculateRuleOutput(
   calcType: PricingCalcType,

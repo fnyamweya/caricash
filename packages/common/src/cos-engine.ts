@@ -118,6 +118,9 @@ export function allConditionsMatch(
 
 /**
  * Calculate a component's output amount.
+ * NOTE: Uses Number for intermediate arithmetic. For production with sub-cent
+ * precision requirements, replace with a decimal library (e.g., decimal.js).
+ * Final values are stored as NUMERIC(20,8) in the database.
  */
 function calculateComponentOutput(
   component: CosComponent,

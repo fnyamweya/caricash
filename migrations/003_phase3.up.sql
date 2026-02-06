@@ -167,7 +167,7 @@ CREATE TABLE webhook_subscriptions (
   status          webhook_status NOT NULL DEFAULT 'ACTIVE',
   event_types     TEXT[] NOT NULL,   -- array of event type patterns
 
-  -- Signing
+  -- Signing (encrypt at rest in production; use @caricash/crypto encryptPayload)
   signing_key     TEXT NOT NULL,     -- HMAC SHA-256 secret
   signing_key_id  VARCHAR(100) NOT NULL,
 
