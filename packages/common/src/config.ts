@@ -13,14 +13,13 @@ export function resolveEffectiveRecord<T extends { status?: string; effective_fr
       const dateCompare = b.effectiveFrom.localeCompare(a.effectiveFrom);
       if (dateCompare !== 0) return dateCompare;
       return b.version - a.version;
-    })
-    .map(({ record }) => record);
+    });
 
-  return (
-    ordered.find((record) => {
-      const status = record.status ?? 'ACTIVE';
-      const effectiveFrom = record.effective_from ?? record.effectiveFrom ?? today;
-      return status === 'ACTIVE' && effectiveFrom <= today;
-    }) ?? null
-  );
+  const match = ordered.find(({ record }) => {
+    const status = record.status ?? 'ACTIVE';
+    const effectiveFrom = record.effective_from ?? record.effectiveFrom ?? today;
+    return status === 'ACTIVE' && effectiveFrom <= today;
+  });
+
+  return match ? match.record : null;
 }
