@@ -3,15 +3,18 @@ export function resolveEffectiveRecord<T extends { status?: string; effective_fr
   now: Date = new Date(),
 ): T | null {
   const today = now.toISOString().slice(0, 10);
-  const ordered = [...records].sort((a, b) => {
-    const aDate = a.effective_from ?? a.effectiveFrom ?? '';
-    const bDate = b.effective_from ?? b.effectiveFrom ?? '';
-    const dateCompare = bDate.localeCompare(aDate);
-    if (dateCompare !== 0) return dateCompare;
-    const aVersion = (a as { version?: number }).version ?? 0;
-    const bVersion = (b as { version?: number }).version ?? 0;
-    return bVersion - aVersion;
-  });
+  const ordered = records
+    .map((record) => ({
+      record,
+      effectiveFrom: record.effective_from ?? record.effectiveFrom ?? '',
+      version: (record as { version?: number }).version ?? 0,
+    }))
+    .sort((a, b) => {
+      const dateCompare = b.effectiveFrom.localeCompare(a.effectiveFrom);
+      if (dateCompare !== 0) return dateCompare;
+      return b.version - a.version;
+    })
+    .map(({ record }) => record);
 
   return (
     ordered.find((record) => {
