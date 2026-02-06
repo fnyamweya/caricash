@@ -45,7 +45,7 @@ export class TokenService {
     const expiresAt = new Date(Date.now() + JWT_REFRESH_TTL_SECONDS * 1000);
 
     await query(
-      `INSERT INTO refresh_tokens (principal_id, token_hash, expires_at, user_agent, ip_address)
+      `INSERT INTO refresh_tokens (user_id, token_hash, expires_at, user_agent, ip_address)
        VALUES ($1, $2, $3, $4, $5::inet)`,
       [principalId, tokenHash, expiresAt, userAgent ?? null, ip ?? null],
     );
@@ -54,10 +54,10 @@ export class TokenService {
   async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string; expiresIn: number }> {
     const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
 
-    const row = await queryOne<{ id: string; principal_id: string; expires_at: Date }>(
-      `SELECT rt.id, rt.principal_id, rt.expires_at
+    const row = await queryOne<{ id: string; user_id: string; expires_at: Date }>(
+      `SELECT rt.id, rt.user_id, rt.expires_at
        FROM refresh_tokens rt
-       JOIN principals p ON p.id = rt.principal_id
+       JOIN users p ON p.id = rt.user_id
        WHERE rt.token_hash = $1 AND rt.revoked_at IS NULL AND rt.expires_at > NOW() AND p.status = 'ACTIVE'`,
       [tokenHash],
     );
@@ -67,12 +67,12 @@ export class TokenService {
     }
 
     const principal = await queryOne<{ principal_type: string }>(
-      'SELECT principal_type FROM principals WHERE id = $1',
-      [row.principal_id],
+      'SELECT principal_type FROM users WHERE id = $1',
+      [row.user_id],
     );
 
     const accessToken = jwt.sign(
-      { sub: row.principal_id, type: principal?.principal_type },
+      { sub: row.user_id, type: principal?.principal_type },
       this.jwtSecret,
       { expiresIn: JWT_ACCESS_TTL_SECONDS },
     );

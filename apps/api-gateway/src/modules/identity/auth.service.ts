@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrincipalRepository } from './principal.repository';
+import { UserRepository } from './user.repository';
 import { TokenService } from './token.service';
 import { verifyPin } from '@caricash/crypto';
 import { UnauthorizedError, AppError } from '@caricash/common';
@@ -8,7 +8,7 @@ import { MAX_PIN_ATTEMPTS, PIN_LOCKOUT_MINUTES } from '@caricash/common';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly principalRepo: PrincipalRepository,
+    private readonly principalRepo: UserRepository,
     private readonly tokenService: TokenService,
   ) {}
 

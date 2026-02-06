@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { Policy, PolicyRule, PolicySubject, PolicyResource } from './types';
+import { Policy, PolicyRule, PolicySubject, PolicyResource, PolicyDecision, PolicyContext, ConditionValue } from './types';
+import { ABAC_ATTRIBUTE_WHITELIST } from '@caricash/common';
 
 export class PolicyEngine {
   private policies: Policy[] = [];
@@ -21,11 +22,18 @@ export class PolicyEngine {
     }
   }
 
-  /**
-   * Evaluate if a subject is allowed to perform an action on a resource.
-   * Default deny: if no rule explicitly allows, the action is denied.
-   */
-  isAllowed(subject: PolicySubject, action: string, resource: PolicyResource): boolean {
+  evaluate(subject: PolicySubject, action: string, resource: PolicyResource, context: PolicyContext = {}): PolicyDecision {
+    const reasonCodes: string[] = [];
+    const obligations: string[] = [];
+
+    if (!this.subjectAttributesWhitelisted(subject.attributes ?? {})) {
+      return { allow: false, reasonCodes: ['ABAC_ATTRIBUTE_NOT_ALLOWED'], obligations: [] };
+    }
+
+    if (subject.principalId && resource.attributes?.principalId && subject.principalId !== resource.attributes.principalId) {
+      return { allow: false, reasonCodes: ['PRINCIPAL_BOUNDARY'], obligations: [] };
+    }
+
     let allowed = false;
 
     for (const policy of this.policies) {
@@ -33,13 +41,33 @@ export class PolicyEngine {
         if (!this.matchesAction(rule, action)) continue;
         if (!this.matchesResource(rule, resource)) continue;
         if (!this.matchesSubject(rule, subject)) continue;
+        if (!this.matchesConditions(rule, subject, resource, context)) continue;
 
-        if (rule.effect === 'DENY') return false;
-        if (rule.effect === 'ALLOW') allowed = true;
+        if (rule.effect === 'DENY') {
+          reasonCodes.push(rule.reason ?? 'EXPLICIT_DENY');
+          return { allow: false, reasonCodes, obligations };
+        }
+        if (rule.effect === 'ALLOW') {
+          allowed = true;
+          if (rule.reason) reasonCodes.push(rule.reason);
+          if (rule.obligations) obligations.push(...rule.obligations);
+        }
       }
     }
 
-    return allowed;
+    if (!allowed) {
+      reasonCodes.push('NO_MATCH');
+    }
+
+    return { allow: allowed, reasonCodes, obligations };
+  }
+
+  /**
+   * Evaluate if a subject is allowed to perform an action on a resource.
+   * Default deny: if no rule explicitly allows, the action is denied.
+   */
+  isAllowed(subject: PolicySubject, action: string, resource: PolicyResource, context: PolicyContext = {}): boolean {
+    return this.evaluate(subject, action, resource, context).allow;
   }
 
   private matchesSubject(rule: PolicyRule, subject: PolicySubject): boolean {
@@ -64,6 +92,64 @@ export class PolicyEngine {
       return !id || id === '*' || id === resource.id;
     });
   }
+
+  private matchesConditions(
+    rule: PolicyRule,
+    subject: PolicySubject,
+    resource: PolicyResource,
+    context: PolicyContext,
+  ): boolean {
+    if (!rule.conditions) return true;
+    const { subject: subjectConditions, resource: resourceConditions, context: contextConditions } = rule.conditions;
+
+    return (
+      this.matchesConditionGroup(subject.attributes ?? {}, subjectConditions) &&
+      this.matchesConditionGroup(resource.attributes ?? {}, resourceConditions) &&
+      this.matchesConditionGroup(context, contextConditions)
+    );
+  }
+
+  private matchesConditionGroup(
+    actual: Record<string, unknown>,
+    conditions?: Record<string, ConditionValue>,
+  ): boolean {
+    if (!conditions) return true;
+    return Object.entries(conditions).every(([key, expected]) =>
+      this.matchesConditionValue(actual[key], expected),
+    );
+  }
+
+  private matchesConditionValue(actual: unknown, expected: ConditionValue): boolean {
+    if (expected === undefined) return true;
+    if (typeof expected === 'object' && expected !== null && !Array.isArray(expected)) {
+      const { anyOf, allOf, contains, gte, lte } = expected as {
+        anyOf?: Array<string | number | boolean>;
+        allOf?: Array<string | number | boolean>;
+        contains?: string;
+        gte?: number;
+        lte?: number;
+      };
+      if (anyOf && !anyOf.includes(actual as string | number | boolean)) return false;
+      if (allOf && (!Array.isArray(actual) || !allOf.every((item) => (actual as unknown[]).includes(item)))) return false;
+      if (contains && (!Array.isArray(actual) || !(actual as unknown[]).includes(contains))) return false;
+      if (gte !== undefined && typeof actual === 'number' && actual < gte) return false;
+      if (lte !== undefined && typeof actual === 'number' && actual > lte) return false;
+      return true;
+    }
+    if (Array.isArray(expected)) {
+      const expectedValues = expected as Array<string | number | boolean>;
+      if (Array.isArray(actual)) {
+        return expectedValues.some((item) => (actual as unknown[]).includes(item));
+      }
+      return expectedValues.includes(actual as string | number | boolean);
+    }
+    return actual === expected;
+  }
+
+  private subjectAttributesWhitelisted(attributes: Record<string, unknown>): boolean {
+    const whitelist = Array.from((ABAC_ATTRIBUTE_WHITELIST ?? []) as readonly string[]);
+    return Object.keys(attributes).every((key) => whitelist.includes(key));
+  }
 }
 
 /**
@@ -75,11 +161,12 @@ export function isAllowed(
   subject: PolicySubject,
   action: string,
   resource: PolicyResource,
+  context: PolicyContext = {},
 ): boolean {
   if (!defaultEngine) {
     defaultEngine = new PolicyEngine();
     const policiesDir = path.resolve(process.cwd(), 'policies');
     defaultEngine.loadFromDirectory(policiesDir);
   }
-  return defaultEngine.isAllowed(subject, action, resource);
+  return defaultEngine.isAllowed(subject, action, resource, context);
 }

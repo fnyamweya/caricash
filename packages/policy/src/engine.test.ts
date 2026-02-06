@@ -16,6 +16,8 @@ describe('PolicyEngine', () => {
             subjects: ['SYSTEM'],
             actions: ['ledger.post', 'ledger.reverse'],
             resources: ['ledger:*'],
+            reason: 'SYSTEM_LEDGER',
+            obligations: ['require_mfa'],
           },
           {
             effect: 'ALLOW' as const,
@@ -40,13 +42,24 @@ describe('PolicyEngine', () => {
     ];
   });
 
-  it('should allow SYSTEM to post ledger entries', () => {
+   it('should allow SYSTEM to post ledger entries', () => {
     const result = engine.isAllowed(
       { principalType: 'SYSTEM', roles: [] },
       'ledger.post',
       { type: 'ledger', id: 'entry-1' },
     );
     expect(result).toBe(true);
+  });
+
+  it('should return obligations and reasons when allowed', () => {
+    const decision = engine.evaluate(
+      { principalType: 'SYSTEM', roles: [] },
+      'ledger.post',
+      { type: 'ledger', id: 'entry-1' },
+    );
+    expect(decision.allow).toBe(true);
+    expect(decision.reasonCodes).toContain('SYSTEM_LEDGER');
+    expect(decision.obligations).toContain('require_mfa');
   });
 
   it('should deny CUSTOMER from posting ledger entries', () => {
@@ -102,5 +115,25 @@ describe('PolicyEngine', () => {
       { type: 'ledger' },
     );
     expect(result).toBe(false);
+  });
+
+  it('should enforce principal boundary', () => {
+    const decision = engine.evaluate(
+      { principalType: 'CUSTOMER', principalId: 'p1', roles: [] },
+      'account.read',
+      { type: 'account', id: 'acct-1', attributes: { principalId: 'p2' } },
+    );
+    expect(decision.allow).toBe(false);
+    expect(decision.reasonCodes).toContain('PRINCIPAL_BOUNDARY');
+  });
+
+  it('should deny when subject attributes are not whitelisted', () => {
+    const decision = engine.evaluate(
+      { principalType: 'STAFF', roles: ['ADMIN'], attributes: { unknown_attr: true } },
+      'audit.read',
+      { type: 'audit' },
+    );
+    expect(decision.allow).toBe(false);
+    expect(decision.reasonCodes).toContain('ABAC_ATTRIBUTE_NOT_ALLOWED');
   });
 });

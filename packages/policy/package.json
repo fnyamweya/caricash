@@ -12,6 +12,7 @@
     "lint": "eslint src/ --ext .ts"
   },
   "dependencies": {
+    "@caricash/common": "workspace:*",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

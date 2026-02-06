@@ -26,12 +26,13 @@ export class LedgerController {
     @Param('entryId') entryId: string,
     @Headers('idempotency-key') idempotencyKey: string,
     @Headers('x-correlation-id') correlationId: string,
-    @Body() dto: { description: string; businessDay: string },
+    @Body() dto: { description: string; reference: string; businessDay: string },
   ) {
     return this.ledgerService.reverseEntry(entryId, {
       idempotencyKey,
       correlationId,
       description: dto.description,
+      reference: dto.reference,
       businessDay: dto.businessDay,
     });
   }

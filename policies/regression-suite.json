@@ -1,0 +1,3704 @@
+{
+  "cases": [
+    {
+      "name": "case_001",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_002",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_003",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_004",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_005",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_006",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_007",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_008",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_009",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_010",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_011",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_012",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_013",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_014",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_015",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_016",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_017",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_018",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_019",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_020",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_021",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_022",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_023",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_024",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_025",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_026",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_027",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_028",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_029",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_030",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_031",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_032",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_033",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_034",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_035",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_036",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_037",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_038",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_039",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_040",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_041",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_042",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_043",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_044",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_045",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_046",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_047",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_048",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_049",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_050",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_051",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_052",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_053",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_054",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_055",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_056",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_057",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_058",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_059",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_060",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_061",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_062",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_063",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_064",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_065",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_066",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_067",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_068",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_069",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_070",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_071",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_072",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_073",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_074",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_075",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_076",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_077",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_078",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_079",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_080",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_081",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_082",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_083",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_084",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_085",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_086",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_087",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_088",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_089",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_090",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_091",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_092",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_093",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_094",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_095",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_096",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_097",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_098",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_099",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_100",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_101",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_102",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_103",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_104",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_105",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_106",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_107",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_108",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_109",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_110",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_111",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_112",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_113",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_114",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_115",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_116",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_117",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_118",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_119",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_120",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_121",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_122",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_123",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_124",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_125",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_126",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_127",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_128",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_129",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_130",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_131",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_132",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_133",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_134",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_135",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_136",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_137",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_138",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_139",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_140",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_141",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_142",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_143",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_144",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_145",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_146",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_147",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_148",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_149",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_150",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_151",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_152",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_153",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_154",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_155",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_156",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_157",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_158",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_159",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_160",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_161",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_162",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_163",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_164",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_165",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_166",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_167",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_168",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_169",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_170",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_171",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_172",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_173",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_174",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_175",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_176",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_177",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_178",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_179",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_180",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_181",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_182",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_183",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_184",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_185",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_186",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_187",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_188",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_189",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_190",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_191",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_192",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_193",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_194",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_195",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_196",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    },
+    {
+      "name": "case_197",
+      "subject": {
+        "principalType": "AGENT",
+        "roles": [
+          "AGENT_TELLER"
+        ],
+        "principalId": "a1"
+      },
+      "action": "agent.user.manage",
+      "resource": {
+        "type": "agent",
+        "id": "a1",
+        "attributes": {
+          "principalId": "a1"
+        }
+      },
+      "expected": false,
+      "obligations": []
+    },
+    {
+      "name": "case_198",
+      "subject": {
+        "principalType": "CUSTOMER",
+        "roles": []
+      },
+      "action": "kyc.submit",
+      "resource": {
+        "type": "kyc",
+        "id": "k1"
+      },
+      "expected": true,
+      "obligations": []
+    },
+    {
+      "name": "case_199",
+      "subject": {
+        "principalType": "STAFF",
+        "roles": [
+          "STAFF_COMPLIANCE"
+        ]
+      },
+      "action": "kyc.review",
+      "resource": {
+        "type": "kyc",
+        "id": "k2"
+      },
+      "expected": true,
+      "obligations": [
+        "require_maker_checker"
+      ]
+    },
+    {
+      "name": "case_200",
+      "subject": {
+        "principalType": "MERCHANT",
+        "roles": [
+          "MERCHANT_OWNER"
+        ],
+        "principalId": "p1"
+      },
+      "action": "merchant.user.manage",
+      "resource": {
+        "type": "merchant",
+        "id": "m1",
+        "attributes": {
+          "principalId": "p1"
+        }
+      },
+      "expected": true,
+      "obligations": [
+        "require_mfa"
+      ]
+    }
+  ]
+}
