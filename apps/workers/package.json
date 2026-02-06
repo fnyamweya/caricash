@@ -1,0 +1,30 @@
+{
+  "name": "@caricash/workers",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/main.ts",
+    "start": "node dist/main.js",
+    "test": "jest --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ --ext .ts"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.0",
+    "@caricash/common": "workspace:*",
+    "@caricash/db": "workspace:*",
+    "@caricash/crypto": "workspace:*",
+    "@caricash/events": "workspace:*",
+    "@caricash/observability": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/amqplib": "^0.10.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.0",
+    "@types/jest": "^29.5.0",
+    "ts-node": "^10.9.0"
+  }
+}

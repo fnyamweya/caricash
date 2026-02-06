@@ -1,0 +1,26 @@
+name: phase1-policies
+version: "1.0"
+rules:
+  # Service-only: ledger posting
+  - effect: ALLOW
+    subjects: ["SYSTEM"]
+    actions: ["ledger.post", "ledger.reverse"]
+    resources: ["ledger:*"]
+
+  # Staff can read audit
+  - effect: ALLOW
+    subjects: ["role:ADMIN", "role:AUDITOR"]
+    actions: ["audit.read"]
+    resources: ["audit:*"]
+
+  # Staff can read config
+  - effect: ALLOW
+    subjects: ["role:ADMIN", "role:OPERATOR"]
+    actions: ["config.read", "config.write"]
+    resources: ["config:*"]
+
+  # Customers can read own account
+  - effect: ALLOW
+    subjects: ["CUSTOMER"]
+    actions: ["account.read"]
+    resources: ["account:*"]
