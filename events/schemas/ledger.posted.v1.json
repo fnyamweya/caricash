@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://caricash.bb/schemas/ledger.posted.v1.json",
+  "title": "Ledger Posted Event",
+  "description": "Event published when a journal entry is successfully posted to the ledger",
+  "type": "object",
+  "required": [
+    "entryId",
+    "entryNumber",
+    "subledger",
+    "description",
+    "reference",
+    "businessDay",
+    "idempotencyKey",
+    "lines",
+    "metadata",
+    "entryHash"
+  ],
+  "properties": {
+    "entryId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the journal entry"
+    },
+    "entryNumber": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Sequential entry number"
+    },
+    "subledger": {
+      "type": "string",
+      "enum": ["CUSTOMER", "AGENT", "MERCHANT", "SYSTEM"],
+      "description": "Subledger classification"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "Human-readable narration"
+    },
+    "reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "External reference (payment ID, etc.)"
+    },
+    "businessDay": {
+      "type": "string",
+      "format": "date",
+      "description": "Business day (YYYY-MM-DD)"
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Idempotency key for deduplication"
+    },
+    "lines": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["accountId", "debitCredit", "amount", "currencyCode"],
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "debitCredit": {
+            "type": "string",
+            "enum": ["DEBIT", "CREDIT"]
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^[0-9]+(\\.[0-9]+)?$",
+            "description": "Amount as string for precision"
+          },
+          "currencyCode": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata"
+    },
+    "entryHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of entry for integrity"
+    }
+  }
+}

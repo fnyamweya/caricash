@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://caricash.bb/schemas/audit.recorded.v1.json",
+  "title": "Audit Recorded Event",
+  "description": "Event published when an audit event is recorded in the tamper-evident chain",
+  "type": "object",
+  "required": [
+    "auditEventId",
+    "sequenceNumber",
+    "actorType",
+    "action",
+    "resourceType",
+    "hash"
+  ],
+  "properties": {
+    "auditEventId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "sequenceNumber": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "actorType": {
+      "type": "string",
+      "enum": ["CUSTOMER", "AGENT", "STAFF", "SYSTEM"]
+    },
+    "actorId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "resourceType": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "resourceId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash linking to previous audit event"
+    }
+  }
+}
