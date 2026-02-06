@@ -31,24 +31,24 @@ export interface AgentChainRow {
 
 @Injectable()
 export class AgentsRepository {
-  async createPrincipal(params: { principalType: string; countryCode: string; displayName: string }): Promise<PrincipalRow> {
+  async createPrincipal(params: { principalType: string; countryCode: string; displayName: string }): Promise<PrincipalRow | null> {
     return queryOne<PrincipalRow>(
       `INSERT INTO principals (principal_type, country_code, display_name)
        VALUES ($1, $2, $3)
        RETURNING *`,
       [params.principalType, params.countryCode, params.displayName],
-    ) as Promise<PrincipalRow>;
+    );
   }
 
   async createAgent(
     params: { principalId: string; countryCode: string; agentNumber: string; level: number; parentAgentId?: string | null },
-  ): Promise<AgentRow> {
+  ): Promise<AgentRow | null> {
     return queryOne<AgentRow>(
       `INSERT INTO agents (principal_id, country_code, agent_number, level, parent_agent_id)
        VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
       [params.principalId, params.countryCode, params.agentNumber, params.level, params.parentAgentId ?? null],
-    ) as Promise<AgentRow>;
+    );
   }
 
   async findAgentById(agentId: string): Promise<AgentRow | null> {

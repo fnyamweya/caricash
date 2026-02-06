@@ -18,6 +18,9 @@ export class AgentsService {
       countryCode: params.countryCode,
       displayName: params.displayName,
     });
+    if (!principal) {
+      throw new ValidationError('Failed to create agent principal');
+    }
 
     const agentNumber = this.generateAgentNumber(params.countryCode);
     const agent = await this.repo.createAgent({
@@ -27,6 +30,9 @@ export class AgentsService {
       level,
       parentAgentId: params.parentAgentId ?? null,
     });
+    if (!agent) {
+      throw new ValidationError('Failed to create agent');
+    }
 
     await query(
       `INSERT INTO outbox_events (event_type, correlation_id, payload)
